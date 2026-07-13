@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ai_meeting_debrief_user,ai.meeting.debrief user,model_ai_meeting_debrief,ai_meeting_debrief.group_ai_meeting_user,1,1,1,1
+access_ai_meeting_debrief_manager,ai.meeting.debrief manager,model_ai_meeting_debrief,ai_meeting_debrief.group_ai_meeting_manager,1,1,1,1
+access_ai_meeting_action_item_user,ai.meeting.action.item user,model_ai_meeting_action_item,ai_meeting_debrief.group_ai_meeting_user,1,1,1,1
+access_ai_meeting_action_item_manager,ai.meeting.action.item manager,model_ai_meeting_action_item,ai_meeting_debrief.group_ai_meeting_manager,1,1,1,1
+access_ai_meeting_decision_user,ai.meeting.decision user,model_ai_meeting_decision,ai_meeting_debrief.group_ai_meeting_user,1,1,1,1
+access_ai_meeting_decision_manager,ai.meeting.decision manager,model_ai_meeting_decision,ai_meeting_debrief.group_ai_meeting_manager,1,1,1,1

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#875A7B;">AI Meeting Debrief</h2>
+        <h3 class="oe_slogan">Turn any meeting into structured insights — automatically</h3>
+        <div class="oe_demo oe_picture oe_screenshot">
+            <img src="banner.png" alt="AI Meeting Debrief"/>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h3>What it does</h3>
+        <p>
+            AI Meeting Debrief connects directly to Odoo Calendar and automatically creates a debrief
+            record when your meeting ends. Paste a transcript (or upload a recording for Gemini users),
+            and the AI extracts action items, decisions, and a full sentiment analysis in seconds.
+        </p>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <h3>Key Features</h3>
+            <ul>
+                <li><b>Multiple AI Providers</b> — Google Gemini, OpenAI GPT-4o, and Anthropic Claude</li>
+                <li><b>Calendar Integration</b> — "Create Debrief" button on every Odoo Calendar event</li>
+                <li><b>Auto-Draft Creation</b> — A scheduled job creates a draft debrief 5 minutes after your meeting ends</li>
+                <li><b>Video &amp; Audio Analysis</b> — Upload recordings for Gemini to transcribe and analyze (MP4, MP3, WAV, and more)</li>
+                <li><b>Action Items → Tasks</b> — Every extracted action item becomes a Project task, assigned to the right person</li>
+                <li><b>Decision Log</b> — All decisions posted to the meeting chatter for a permanent audit trail</li>
+                <li><b>Sentiment &amp; HR Alerts</b> — Detects tension or conflict and flags it for HR review</li>
+                <li><b>Privacy Mode</b> — Toggle per-meeting to exclude sensitive meetings from AI processing</li>
+                <li><b>OWL Dashboard</b> — Meeting health KPIs: total meetings, pending actions, sentiment breakdown, HR alerts</li>
+                <li><b>PDF Report</b> — One-click export of the full debrief as a professional PDF</li>
+                <li><b>Arabic Support</b> — Built-in Arabic (عربي) translation</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <h3>Supported AI Providers</h3>
+            <table style="width:100%; border-collapse:collapse;">
+                <tr style="background:#f5f5f5;">
+                    <th style="padding:8px; text-align:left;">Provider</th>
+                    <th style="padding:8px; text-align:left;">Model</th>
+                    <th style="padding:8px; text-align:left;">Video Support</th>
+                </tr>
+                <tr>
+                    <td style="padding:8px;">Google Gemini</td>
+                    <td style="padding:8px;">gemini-2.5-flash-lite</td>
+                    <td style="padding:8px;">Yes</td>
+                </tr>
+                <tr style="background:#f9f9f9;">
+                    <td style="padding:8px;">OpenAI</td>
+                    <td style="padding:8px;">gpt-4o</td>
+                    <td style="padding:8px;">Text only</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px;">Anthropic Claude</td>
+                    <td style="padding:8px;">claude-sonnet-4-6</td>
+                    <td style="padding:8px;">Text only</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h3>How it works</h3>
+        <ol>
+            <li>Install the module and add your AI API key in <b>Settings → AI Meeting Debrief</b></li>
+            <li>When a calendar meeting ends, a draft debrief is created automatically</li>
+            <li>Open the debrief, paste the transcript (or upload a recording)</li>
+            <li>Click <b>Analyze with AI</b> — action items, decisions, and sentiment are extracted in seconds</li>
+            <li>Action items become Project tasks; decisions are logged in the chatter; HR is alerted if tension is detected</li>
+        </ol>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h3>Privacy &amp; Security</h3>
+        <ul>
+            <li>API keys are stored as encrypted Odoo system parameters</li>
+            <li>Video files are automatically deleted from Gemini's servers after analysis</li>
+            <li>Per-meeting Privacy Mode lets you exclude sensitive meetings from AI processing</li>
+            <li>Role-based access: Users manage their own debriefs; Administrators have full access</li>
+        </ul>
+    </div>
+</section>
+
+</body>
+</html>

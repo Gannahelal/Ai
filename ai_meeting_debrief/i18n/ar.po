@@ -1,0 +1,158 @@
+# Translation of AI Meeting Debrief to Arabic
+# This file contains the translation of the following modules:
+# * ai_meeting_debrief
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-06-30 00:00+0000\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: ai_meeting_debrief
+msgid "AI Meeting Debrief"
+msgstr "تحليل الاجتماعات بالذكاء الاصطناعي"
+
+#. module: ai_meeting_debrief
+msgid "Meeting Title"
+msgstr "عنوان الاجتماع"
+
+#. module: ai_meeting_debrief
+msgid "Meeting Date"
+msgstr "تاريخ الاجتماع"
+
+#. module: ai_meeting_debrief
+msgid "Attendees"
+msgstr "الحضور"
+
+#. module: ai_meeting_debrief
+msgid "Analyze with AI"
+msgstr "تحليل بالذكاء الاصطناعي"
+
+#. module: ai_meeting_debrief
+msgid "Reset to Draft"
+msgstr "إعادة إلى المسودة"
+
+#. module: ai_meeting_debrief
+msgid "Action Items"
+msgstr "بنود العمل"
+
+#. module: ai_meeting_debrief
+msgid "Decisions"
+msgstr "القرارات"
+
+#. module: ai_meeting_debrief
+msgid "Sentiment"
+msgstr "المزاج العام"
+
+#. module: ai_meeting_debrief
+msgid "HR Alert"
+msgstr "تنبيه الموارد البشرية"
+
+#. module: ai_meeting_debrief
+msgid "Privacy Mode"
+msgstr "وضع الخصوصية"
+
+#. module: ai_meeting_debrief
+msgid "Privacy Mode is enabled for this meeting. Disable it first to run AI analysis."
+msgstr "وضع الخصوصية مفعّل لهذا الاجتماع. يرجى تعطيله أولاً لتشغيل التحليل."
+
+#. module: ai_meeting_debrief
+msgid "Print Report"
+msgstr "طباعة التقرير"
+
+#. module: ai_meeting_debrief
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: ai_meeting_debrief
+msgid "Analyzed"
+msgstr "تم التحليل"
+
+#. module: ai_meeting_debrief
+msgid "Positive"
+msgstr "إيجابي"
+
+#. module: ai_meeting_debrief
+msgid "Neutral"
+msgstr "محايد"
+
+#. module: ai_meeting_debrief
+msgid "Tense"
+msgstr "متوتر"
+
+#. module: ai_meeting_debrief
+msgid "Conflict"
+msgstr "صراع"
+
+#. module: ai_meeting_debrief
+msgid "Create Debrief"
+msgstr "إنشاء تحليل"
+
+#. module: ai_meeting_debrief
+msgid "Meeting Debrief"
+msgstr "تحليل الاجتماع"
+
+#. module: ai_meeting_debrief
+msgid "Meeting Debriefs"
+msgstr "تحليلات الاجتماعات"
+
+#. module: ai_meeting_debrief
+msgid "AI Provider"
+msgstr "مزود الذكاء الاصطناعي"
+
+#. module: ai_meeting_debrief
+msgid "Google Gemini"
+msgstr "Google Gemini"
+
+#. module: ai_meeting_debrief
+msgid "OpenAI GPT-4o"
+msgstr "OpenAI GPT-4o"
+
+#. module: ai_meeting_debrief
+msgid "Anthropic Claude"
+msgstr "Anthropic Claude"
+
+#. module: ai_meeting_debrief
+msgid "Calendar Event"
+msgstr "حدث التقويم"
+
+#. module: ai_meeting_debrief
+msgid "Meeting URL"
+msgstr "رابط الاجتماع"
+
+#. module: ai_meeting_debrief
+msgid "Dashboard"
+msgstr "لوحة المعلومات"
+
+#. module: ai_meeting_debrief
+msgid "All Meetings"
+msgstr "جميع الاجتماعات"
+
+#. module: ai_meeting_debrief
+msgid "New Debrief"
+msgstr "تحليل جديد"
+
+#. module: ai_meeting_debrief
+msgid "Tension Score"
+msgstr "مؤشر التوتر"
+
+#. module: ai_meeting_debrief
+msgid "Platform"
+msgstr "المنصة"
+
+#. module: ai_meeting_debrief
+msgid "Department"
+msgstr "القسم"
+
+#. module: ai_meeting_debrief
+msgid "Your meeting has ended."
+msgstr "انتهى اجتماعك."
+
+#. module: ai_meeting_debrief
+msgid "Open this debrief to add a transcript and generate AI insights."
+msgstr "افتح هذا التحليل لإضافة نص الاجتماع وتوليد رؤى الذكاء الاصطناعي."

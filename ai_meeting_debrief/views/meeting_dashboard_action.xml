@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_meeting_debrief_dashboard" model="ir.actions.client">
+        <field name="name">Meeting Health Dashboard</field>
+        <field name="tag">ai_meeting_debrief.dashboard</field>
+    </record>
+
+</odoo>

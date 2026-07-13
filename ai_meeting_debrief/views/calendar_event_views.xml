@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_calendar_event_form_ai_debrief" model="ir.ui.view">
+        <field name="name">calendar.event.form.ai.debrief</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart button showing linked debriefs count -->
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button"
+                        icon="fa-file-text-o"
+                        name="action_view_meeting_debriefs"
+                        type="object"
+                        invisible="ai_debrief_count == 0">
+                    <field name="ai_debrief_count" widget="statinfo" string="Debriefs"/>
+                </button>
+            </div>
+
+            <!-- Declare fields so they're available in invisible expressions -->
+            <field name="active" position="after">
+                <field name="ai_debrief_count" invisible="1"/>
+            </field>
+
+            <!-- "Create Debrief" button in header (hidden once a debrief exists) -->
+            <button name="action_open_composer" position="before">
+                <button name="action_create_meeting_debrief"
+                        type="object"
+                        string="Create Debrief"
+                        class="btn-primary"
+                        invisible="ai_debrief_count > 0"/>
+            </button>
+
+            <!-- Meeting Notes field — write transcript here, AI debrief picks it up automatically -->
+            <chatter position="before">
+                <group string="Meeting Notes / Transcript">
+                    <field name="meeting_notes"
+                           nolabel="1"
+                           placeholder="Write meeting notes or paste the transcript here during or after the meeting. The AI debrief will use this automatically when you click Analyze with AI."
+                           style="min-height: 150px; font-family: monospace; font-size: 13px;"/>
+                </group>
+            </chatter>
+
+        </field>
+    </record>
+
+</odoo>

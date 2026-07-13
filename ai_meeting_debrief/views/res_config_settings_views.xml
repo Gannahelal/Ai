@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_ai_meeting" model="ir.ui.view">
+        <field name="name">res.config.settings.view.ai.meeting.debrief</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="AI Meeting Debrief"
+                     string="AI Meeting Debrief"
+                     name="ai_meeting_debrief"
+                     logo="/base/static/description/settings.png">
+
+                    <div id="ai_meeting_api_settings">
+                        <block title="AI Provider Configuration" name="ai_meeting_api_container">
+
+                            <setting id="ai_provider_setting" string="AI Provider"
+                                     help="Choose which AI service to use for meeting analysis.">
+                                <field name="ai_provider" widget="radio"/>
+                            </setting>
+
+                            <!-- Google Gemini -->
+                            <setting id="gemini_api_key_setting"
+                                     string="Gemini API Key"
+                                     invisible="ai_provider != 'gemini'"
+                                     help="Get your free key from Google AI Studio (aistudio.google.com).">
+                                <field name="gemini_api_key" password="True" placeholder="AIzaSy..."/>
+                            </setting>
+
+                            <setting id="gemini_model_setting"
+                                     string="Gemini Model"
+                                     invisible="ai_provider != 'gemini'"
+                                     help="Recommended: gemini-2.5-flash-lite (fast, free tier).">
+                                <field name="gemini_model" placeholder="gemini-2.5-flash-lite"/>
+                            </setting>
+
+                            <!-- OpenAI -->
+                            <setting id="openai_api_key_setting"
+                                     string="OpenAI API Key"
+                                     invisible="ai_provider != 'openai'"
+                                     help="Get your key from platform.openai.com. Uses gpt-4o model.">
+                                <field name="openai_api_key" password="True" placeholder="sk-..."/>
+                            </setting>
+
+                            <!-- Anthropic Claude -->
+                            <setting id="claude_api_key_setting"
+                                     string="Claude API Key"
+                                     invisible="ai_provider != 'claude'"
+                                     help="Get your key from console.anthropic.com. Uses claude-sonnet-4-6 model.">
+                                <field name="claude_api_key" password="True" placeholder="sk-ant-..."/>
+                            </setting>
+
+                            <!-- Shared -->
+                            <setting id="ai_meeting_project_setting"
+                                     string="Default Project for Action Items"
+                                     help="Tasks auto-created from action items will be placed in this project. Leave empty to use 'Meeting Action Items' (created automatically).">
+                                <field name="ai_meeting_default_project_id"/>
+                            </setting>
+
+                        </block>
+                    </div>
+
+                    <div id="ai_meeting_google_meet_settings">
+                        <block title="Google Meet Integration (Auto Transcript)" name="google_meet_integration_container">
+
+                            <setting id="google_service_account_json_setting"
+                                     string="Service Account JSON"
+                                     help="Paste the full JSON content from your Google Cloud Service Account key file. Required to fetch Meet transcripts from Google Drive automatically.">
+                                <field name="google_service_account_json"
+                                       placeholder='{"type": "service_account", "project_id": "...", "private_key": "...", "client_email": "...@....iam.gserviceaccount.com", ...}'
+                                       style="font-family: monospace; font-size: 11px; min-height: 80px;"/>
+                            </setting>
+
+                        </block>
+                    </div>
+
+                    <div id="ai_meeting_zoom_settings">
+                        <block title="Zoom Integration (Auto Transcript)" name="zoom_integration_container">
+
+                            <setting id="zoom_account_id_setting"
+                                     string="Zoom Account ID"
+                                     help="Found in Zoom Marketplace → your Server-to-Server OAuth app → App Credentials.">
+                                <field name="zoom_account_id" placeholder="abc123..."/>
+                            </setting>
+
+                            <setting id="zoom_client_id_setting"
+                                     string="Zoom Client ID"
+                                     help="From your Server-to-Server OAuth app credentials.">
+                                <field name="zoom_client_id" placeholder="XXXXXXXXXX"/>
+                            </setting>
+
+                            <setting id="zoom_client_secret_setting"
+                                     string="Zoom Client Secret"
+                                     help="From your Server-to-Server OAuth app credentials.">
+                                <field name="zoom_client_secret" password="True" placeholder="XXXXXXXXXX"/>
+                            </setting>
+
+                        </block>
+                    </div>
+
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

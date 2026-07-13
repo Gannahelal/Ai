@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Top-level App Menu -->
+    <menuitem id="menu_ai_meeting_debrief_root"
+              name="Meeting Debrief"
+              sequence="90"
+              groups="ai_meeting_debrief.group_ai_meeting_user"
+              web_icon="ai_meeting_debrief,static/description/icon.png"/>
+
+    <!-- Dashboard -->
+    <menuitem id="menu_ai_meeting_debrief_dashboard"
+              name="Dashboard"
+              parent="menu_ai_meeting_debrief_root"
+              action="action_meeting_debrief_dashboard"
+              sequence="10"/>
+
+    <!-- All Debriefs -->
+    <menuitem id="menu_ai_meeting_debrief_list"
+              name="All Meetings"
+              parent="menu_ai_meeting_debrief_root"
+              action="action_ai_meeting_debrief"
+              sequence="20"/>
+
+</odoo>

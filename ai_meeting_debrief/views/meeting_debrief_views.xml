@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- =====================================================================
+         Form View
+    ====================================================================== -->
+    <record id="view_ai_meeting_debrief_form" model="ir.ui.view">
+        <field name="name">ai.meeting.debrief.form</field>
+        <field name="model">ai.meeting.debrief</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_analyze"
+                            type="object"
+                            string="Analyze with AI"
+                            class="btn-primary"
+                            invisible="privacy_mode or state == 'done'"/>
+                    <button name="action_fetch_zoom_transcript"
+                            type="object"
+                            string="Fetch Zoom Transcript"
+                            class="btn-secondary"
+                            invisible="meeting_platform != 'zoom' or state != 'draft'"/>
+                    <button name="action_fetch_google_meet_recording"
+                            type="object"
+                            string="Fetch Meet Recording"
+                            class="btn-secondary"
+                            invisible="meeting_platform != 'google_meet' or state != 'draft'"/>
+                    <button name="%(ai_meeting_debrief.action_report_meeting_debrief)d"
+                            string="Print Report"
+                            type="action"
+                            class="btn-secondary"
+                            invisible="state == 'draft'"/>
+                    <button name="action_reset_draft"
+                            type="object"
+                            string="Reset to Draft"
+                            invisible="state == 'draft'"
+                            confirm="This will delete all AI results for this meeting. Continue?"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button"
+                                icon="fa-check-square-o"
+                                name="action_open_tasks"
+                                type="object"
+                                invisible="task_count == 0">
+                            <field name="task_count" widget="statinfo" string="Tasks"/>
+                        </button>
+                    </div>
+
+                    <!-- HR Alert Banner -->
+                    <div class="alert alert-danger mb-3" role="alert" invisible="not hr_alert">
+                        <strong>HR Alert:</strong> This meeting showed signs of tension.
+                        Please review the sentiment details and take appropriate action.
+                    </div>
+
+                    <!-- Privacy Mode Banner -->
+                    <div class="alert alert-warning mb-3" role="alert" invisible="not privacy_mode">
+                        <strong>Privacy Mode:</strong> This meeting is excluded from AI processing.
+                        Disable Privacy Mode to enable analysis.
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="e.g. Q3 Planning Kickoff"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Meeting Info">
+                            <field name="calendar_event_id"/>
+                            <field name="videocall_location"
+                                   readonly="1"
+                                   invisible="not videocall_location"
+                                   widget="url"/>
+                            <field name="date"/>
+                            <field name="meeting_platform"/>
+                            <field name="department_id"/>
+                            <field name="attendee_ids" widget="many2many_tags"/>
+                            <field name="privacy_mode" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Analysis Results" invisible="state == 'draft'">
+                            <field name="sentiment" widget="badge"
+                                   decoration-success="sentiment == 'positive'"
+                                   decoration-warning="sentiment == 'tense'"
+                                   decoration-danger="sentiment == 'conflict'"/>
+                            <field name="hr_alert" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="📋 Brief" name="brief">
+                            <group string="Custom Instructions for AI">
+                                <field name="custom_prompt"
+                                       nolabel="1"
+                                       placeholder="Optional: tell the AI what to focus on. Examples:&#10;• Who is responsible for the project timeline?&#10;• Highlight all budget-related decisions&#10;• Summarize only the technical discussion"
+                                       style="min-height: 80px;"/>
+                            </group>
+                            <div invisible="state == 'draft'" class="mt-3">
+                                <h4 class="text-muted mb-2">Meeting Summary</h4>
+                                <field name="meeting_summary"
+                                       readonly="1"
+                                       nolabel="1"
+                                       style="white-space: pre-wrap; line-height: 1.7; font-size: 14px;"/>
+                            </div>
+                            <div invisible="state != 'draft'" class="text-muted mt-3">
+                                <em>Click "Analyze with AI" to generate the meeting brief.</em>
+                            </div>
+                        </page>
+
+                        <page string="📄 Transcript / Recording" name="transcript">
+
+                            <!-- Video / Audio Upload -->
+                            <group string="🎥 Meeting Recording (Video or Audio)">
+                                <field name="video_file"
+                                       filename="video_filename"
+                                       widget="binary"
+                                       string="Upload File"/>
+                                <field name="video_filename" invisible="1"/>
+                            </group>
+                            <div class="alert alert-info py-2 mb-3" role="alert">
+                                <strong>Supported formats:</strong>
+                                MP4, MOV, AVI, WebM, MKV (video) · MP3, WAV, M4A, AAC, FLAC (audio)
+                                · Max ~500 MB
+                                <br/>
+                                <strong>Tip:</strong> Upload a recording <em>or</em> paste a text transcript below — recording takes priority.
+                            </div>
+
+                            <!-- Text Transcript (fallback) -->
+                            <group string="📝 Text Transcript (alternative)">
+                                <field name="transcript_file"
+                                       filename="transcript_filename"
+                                       widget="binary"
+                                       string="Upload .txt File"/>
+                                <field name="transcript_filename" invisible="1"/>
+                            </group>
+                            <field name="transcript"
+                                   nolabel="1"
+                                   placeholder="— or paste your meeting transcript here —"
+                                   style="min-height: 200px; font-family: monospace; font-size: 13px;"/>
+
+                        </page>
+
+                        <page string="✅ Action Items" name="action_items">
+                            <field name="action_item_ids" >
+                                <list editable="bottom">
+                                    <field name="description" string="Action Item"/>
+                                    <field name="responsible_name" string="Responsible (AI)"/>
+                                    <field name="responsible_id" string="Linked Employee"/>
+                                    <field name="deadline"/>
+                                    <field name="task_id" readonly="1"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'done'"
+                                           decoration-warning="state == 'pending'"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="📌 Decisions" name="decisions">
+                            <field name="decision_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="description" string="Decision Made"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="⚙️ AI Debug" name="ai_debug" groups="base.group_system">
+                            <field name="ai_raw_response" readonly="1"
+                                   style="font-family: monospace; font-size: 12px;"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- =====================================================================
+         List View
+    ====================================================================== -->
+    <record id="view_ai_meeting_debrief_list" model="ir.ui.view">
+        <field name="name">ai.meeting.debrief.list</field>
+        <field name="model">ai.meeting.debrief</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="hr_alert == True" decoration-muted="privacy_mode == True">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="meeting_platform"/>
+                <field name="department_id"/>
+                <field name="privacy_mode" widget="badge" string="Private"
+                       decoration-warning="privacy_mode == True"
+                       optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-muted="state == 'draft'"/>
+                <field name="sentiment" widget="badge"
+                       decoration-success="sentiment == 'positive'"
+                       decoration-warning="sentiment == 'tense'"
+                       decoration-danger="sentiment == 'conflict'"/>
+                <field name="action_item_count" string="Actions"/>
+                <field name="hr_alert" widget="boolean" string="HR Alert"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- =====================================================================
+         Kanban View
+    ====================================================================== -->
+    <record id="view_ai_meeting_debrief_kanban" model="ir.ui.view">
+        <field name="name">ai.meeting.debrief.kanban</field>
+        <field name="model">ai.meeting.debrief</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="sentiment"/>
+                <field name="hr_alert"/>
+                <field name="action_item_count"/>
+                <field name="state"/>
+                <field name="privacy_mode"/>
+                <templates>
+                    <t t-name="card">
+                        <div t-att-class="'p-2' + (record.hr_alert.raw_value ? ' border-start border-danger border-3' : '')">
+                            <div class="fw-bold mb-1">
+                                <field name="name"/>
+                            </div>
+                            <div class="text-muted small mb-2">
+                                <field name="date"/>
+                            </div>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <t t-if="record.sentiment.raw_value">
+                                    <span t-att-class="'badge ' + (record.sentiment.raw_value === 'positive' ? 'bg-success' : record.sentiment.raw_value === 'tense' ? 'bg-warning text-dark' : record.sentiment.raw_value === 'conflict' ? 'bg-danger' : 'bg-secondary')">
+                                        <field name="sentiment"/>
+                                    </span>
+                                </t>
+                                <t t-if="record.action_item_count.raw_value">
+                                    <span class="badge bg-light text-dark border">
+                                        <field name="action_item_count"/> actions
+                                    </span>
+                                </t>
+                                <t t-if="record.hr_alert.raw_value">
+                                    <span class="badge bg-danger">HR Alert</span>
+                                </t>
+                                <t t-if="record.privacy_mode.raw_value">
+                                    <span class="badge bg-secondary">[PRIVATE]</span>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- =====================================================================
+         Search View
+    ====================================================================== -->
+    <record id="view_ai_meeting_debrief_search" model="ir.ui.view">
+        <field name="name">ai.meeting.debrief.search</field>
+        <field name="model">ai.meeting.debrief</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="attendee_ids"/>
+                <filter string="HR Alerts" name="hr_alerts" domain="[('hr_alert', '=', True)]"/>
+                <separator/>
+                <filter string="Analyzed" name="filter_done" domain="[('state', '=', 'done')]"/>
+                <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter string="Positive" name="filter_positive" domain="[('sentiment', '=', 'positive')]"/>
+                <filter string="Tense" name="filter_tense" domain="[('sentiment', '=', 'tense')]"/>
+                <filter string="Conflict" name="filter_conflict" domain="[('sentiment', '=', 'conflict')]"/>
+                <separator/>
+                <filter string="Meeting Date" name="filter_date" date="date"/>
+                <group>
+                    <filter string="Department" name="group_department" context="{'group_by': 'department_id'}"/>
+                    <filter string="Platform" name="group_platform" context="{'group_by': 'meeting_platform'}"/>
+                    <filter string="Sentiment" name="group_sentiment" context="{'group_by': 'sentiment'}"/>
+                    <filter string="Month" name="group_month" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- =====================================================================
+         Main Window Action
+    ====================================================================== -->
+    <record id="action_ai_meeting_debrief" model="ir.actions.act_window">
+        <field name="name">Meeting Debriefs</field>
+        <field name="res_model">ai.meeting.debrief</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_ai_meeting_debrief_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Start your first AI meeting debrief!
+            </p>
+            <p>
+                Paste a meeting transcript and let AI extract action items,
+                decisions, and sentiment automatically.
+            </p>
+        </field>
+    </record>
+
+</odoo>

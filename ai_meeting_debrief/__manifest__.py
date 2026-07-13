@@ -1,0 +1,32 @@
+{
+    'name': 'AI Meeting Debrief',
+    'version': '19.0.1.1.0',
+    'category': 'Productivity',
+    'summary': 'Automate meeting minutes, action items, and insights using AI (Gemini, GPT-4o, Claude)',
+    'author': 'Ganna Allah Khaled',
+    'maintainer': 'Ganna Allah Khaled',
+    'images': ['static/description/banner.png'],
+    'depends': ['project', 'hr', 'mail', 'base_setup', 'calendar'],
+    'data': [
+        'security/res_groups.xml',
+        'security/ir_rules.xml',
+        'security/ir.model.access.csv',
+        'data/ir_cron.xml',
+        'reports/meeting_debrief_report.xml',
+        'views/meeting_debrief_views.xml',
+        'views/calendar_event_views.xml',
+        'views/meeting_dashboard_action.xml',
+        'views/res_config_settings_views.xml',
+        'views/menus.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'ai_meeting_debrief/static/src/xml/meeting_dashboard.xml',
+            'ai_meeting_debrief/static/src/js/meeting_dashboard.js',
+        ],
+    },
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+    'license': 'LGPL-3',
+}

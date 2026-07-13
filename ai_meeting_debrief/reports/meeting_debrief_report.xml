@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_meeting_debrief" model="ir.actions.report">
+        <field name="name">Meeting Debrief Report</field>
+        <field name="model">ai.meeting.debrief</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ai_meeting_debrief.report_meeting_debrief_document</field>
+        <field name="report_file">ai_meeting_debrief.report_meeting_debrief_document</field>
+        <field name="print_report_name">'Meeting Debrief - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_ai_meeting_debrief"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_meeting_debrief_document">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="debrief">
+                <div class="page">
+                    <h2><t t-esc="debrief.name"/></h2>
+
+                    <table class="table table-sm" style="width:100%">
+                        <tr>
+                            <td style="width:30%"><strong>Date</strong></td>
+                            <td><t t-esc="debrief.date.strftime('%Y-%m-%d %H:%M') if debrief.date else '—'"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Platform</strong></td>
+                            <td><t t-esc="dict(debrief._fields['meeting_platform'].selection).get(debrief.meeting_platform, '—')"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Department</strong></td>
+                            <td><t t-esc="debrief.department_id.name or '—'"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sentiment</strong></td>
+                            <td>
+                                <t t-if="debrief.sentiment">
+                                    <t t-esc="debrief.sentiment.title()"/>
+                                </t>
+                                <t t-else="">—</t>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <t t-if="debrief.attendee_ids">
+                        <h4>Attendees</h4>
+                        <p><t t-esc="', '.join(debrief.attendee_ids.mapped('name'))"/></p>
+                    </t>
+
+                    <t t-if="debrief.action_item_ids">
+                        <h4>Action Items</h4>
+                        <table class="table table-sm table-bordered" style="width:100%">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Responsible</th>
+                                    <th>Deadline</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="debrief.action_item_ids" t-as="item">
+                                    <tr>
+                                        <td><t t-esc="item.description"/></td>
+                                        <td><t t-esc="item.responsible_id.name or item.responsible_name or '—'"/></td>
+                                        <td><t t-esc="item.deadline.strftime('%Y-%m-%d') if item.deadline else '—'"/></td>
+                                        <td><t t-esc="item.state.title()"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+
+                    <t t-if="debrief.decision_ids">
+                        <h4>Decisions</h4>
+                        <ol>
+                            <t t-foreach="debrief.decision_ids" t-as="dec">
+                                <li><t t-esc="dec.description"/></li>
+                            </t>
+                        </ol>
+                    </t>
+
+                    <t t-if="debrief.sentiment_explanation">
+                        <h4>AI Sentiment Assessment</h4>
+                        <p><t t-esc="debrief.sentiment_explanation"/></p>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
