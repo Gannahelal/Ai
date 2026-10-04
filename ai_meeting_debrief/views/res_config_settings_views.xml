@@ -97,7 +97,7 @@
                             </setting>
                               <setting id="test_setting"
                                      string="Test"
-                                     help="Test">
+                                     help="Testeeee">
                                 <field name="test"/>
                             </setting>
 
