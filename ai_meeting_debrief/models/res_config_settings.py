@@ -50,6 +50,11 @@ class ResConfigSettings(models.TransientModel):
         string='Default Project for Tasks',
     )
 
+    test = fields.Char(
+        string='Test',
+        config_parameter='ai_meeting_debrief.test',
+    )
+
     @api.model
     def get_values(self):
         res = super().get_values()

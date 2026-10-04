@@ -95,6 +95,11 @@
                                      help="From your Server-to-Server OAuth app credentials.">
                                 <field name="zoom_client_secret" password="True" placeholder="XXXXXXXXXX"/>
                             </setting>
+                              <setting id="test_setting"
+                                     string="Test"
+                                     help="Test">
+                                <field name="test"/>
+                            </setting>
 
                         </block>
                     </div>
